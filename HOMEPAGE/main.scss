@@ -1,0 +1,373 @@
+// defaults
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,600');
+
+:root {
+  --background:   #64C8C8;
+  ;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #777;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+}
+
+.content {
+  height: 200vh;
+  background-color: #FFF;
+  background-blend-mode: multiply;
+  background-size: cover;
+  display: grid;
+  place-items: center;
+}
+
+/* navigation styles start here */
+
+header {
+  background: var(--background);
+  text-align: center;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+}
+
+.nav-toggle {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+.nav-toggle:focus ~ .nav-toggle-label {
+  outline: 3px solid rgba(lightblue, .75);
+}
+
+.nav-toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 1em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-toggle-label span,
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  display: block;
+  background: white;
+  height: 2px;
+  width: 2em;
+  border-radius: 2px;
+  position: relative;
+}
+
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  content: '';
+  position: absolute;
+}
+
+.nav-toggle-label span::before {
+  bottom: 7px;
+}
+
+.nav-toggle-label span::after {
+  top: 7px;
+}
+
+nav {
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  transform: scale(1, 0);
+  transform-origin: top;
+  transition: transform 400ms ease-in-out;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+nav a:hover {
+  color: #fae333;
+}
+
+.nav-toggle:checked ~ nav {
+  transform: scale(1,1);
+}
+
+.nav-toggle:checked ~ nav a {
+  opacity: 1;
+  transition: opacity 250ms ease-in-out 250ms;
+}
+
+@media screen and (min-width: 800px) {
+  .nav-toggle-label {
+    display: none;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+  }
+  
+  .logo {
+    grid-column: 2 / 3;
+  }
+  
+  nav {
+    // all: unset; /* this causes issues with Edge, since it's unsupported */
+    
+    /* the following lines are not from my video, but add Edge support */
+    position: relative;
+    text-align: left;
+    transition: none;
+    transform: scale(1,1);
+    background: none;
+    top: initial;
+    left: initial;
+    /* end Edge support stuff */
+    
+    grid-column: 3 / 4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  nav ul {
+    display: flex;
+  }
+  
+  nav li {
+    margin-left: 3em;
+    margin-bottom: 0;
+  }
+  
+  nav a {
+    opacity: 1;
+    position: relative;
+  }
+  
+  nav a::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: #fae333;
+    position: absolute;
+    top: -.75em;
+    left: 0;
+    right: 0;
+    transform: scale(0, 1);
+    transition: transform ease-in-out 250ms;
+  }
+  
+  nav a:hover::before {
+    transform: scale(1,1);
+  }
+}
+
+
+h1 {
+  color: white;
+}
+
+// helpers
+.responsive-wrapper.ratio-21x9 {   
+  min-width: 1440px;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  
+  &:after {
+    content: '';
+    width: 100%;
+    height: 0;
+    display: block;
+    padding-bottom: 41.5%;
+  }
+}
+
+// content styling
+.hero {
+  position: relative;
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  
+  &__content {
+    color: #fff;
+    width: 100%;
+    max-width: 750px;
+    position: absolute;
+    z-index: 20;
+  }
+  
+  &__title {
+    font-size: 5rem;
+    margin: 0 0 2.5rem 0;
+    line-height: 1;
+    
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+  
+  &__text {
+    font-size: 1.125rem;
+    line-height: 1.33;
+    margin: 0;
+  }
+  
+  &__background {
+    position: relative;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    
+    iframe {
+      border: none;
+      position: absolute;
+      left: 0;
+      top: -100%;
+      width: 100%;
+      height: 300%;
+    }
+  }
+}
+
+// shadow styles
+.hero--has-shadow {
+  &-bottom-left:before,
+  &-bottom-right:before,
+  &-top-left:before,
+  &-top-right:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    // main shadow
+    background-image: 
+      linear-gradient(5deg, #0003 0%, #0000 33%), 
+      linear-gradient(75deg, #0003 0%, #0000 66%), 
+      linear-gradient(18deg, #0000004d 0%, #0000 33%), 
+      linear-gradient(15deg, #0006 0%, #0000 66%), 
+      linear-gradient(15deg, #00000080, #0000);
+  }
+
+  // positioning
+  &-bottom-left {
+    &:before {
+      transform: scale(1, 1); // default
+    }
+    
+    .hero__content {
+      bottom: 0;
+      left: 0;
+      text-align: left;
+      padding: 15px 15px 50px 70px;
+    }
+  }
+    
+  &-bottom-right {
+    &:before {
+      transform: scale(-1, 1);
+    }
+    
+    .hero__content {
+      bottom: 0;
+      right: 0;
+      text-align: right;
+      padding: 15px 70px 50px 15px;
+    }
+  }
+    
+  &-top-left {
+    &:before {
+      transform: scale(1, -1);
+    }
+    
+    .hero__content {
+      top: 0;
+      left: 0;
+      text-align: left;
+      padding: 50px 15px 15px 70px;
+    }
+  }
+    
+  &-top-right {
+    &:before {
+      transform: scale(-1, -1);
+    }
+    
+    .hero__content {
+      top: 0;
+      right: 0;
+      text-align: right;
+      padding: 50px 70px 15px 15px;
+    }
+  }
+}
+
+footer {
+  padding: 30px;
+  text-align: center;
+  background: var(--background);
+}
+
+footer ul {
+  margin: 0;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+  list-style: none;
+  align-items: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
